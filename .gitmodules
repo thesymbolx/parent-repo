@@ -1,0 +1,3 @@
+[submodule "childrepo"]
+	path = childrepo
+	url = git@github.com:thesymbolx/childrepo.git
