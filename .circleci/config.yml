@@ -67,6 +67,8 @@ workflows:
     jobs:
       - clone-child-repo
       - build-and-test:
+          requires:
+            - clone-child-repo
           filters:
             branches:
               only:
