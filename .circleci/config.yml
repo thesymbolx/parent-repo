@@ -9,6 +9,9 @@ jobs:
       - image: cimg/android:2024.01
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:V/PxmiAO+zs9Y00a9Wjd5Q1DDRtHInFhBl3bgLDXVfk"
       - run:
           name: Initialize Git Submodules
           command: |
@@ -60,10 +63,10 @@ workflows:
               only:
                 - main
                 - develop
-      - build-release:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only:
-                - main 
+#      - build-release:
+#          requires:
+#            - build-and-test
+#          filters:
+#            branches:
+#              only:
+#                - main
