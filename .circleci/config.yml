@@ -69,15 +69,6 @@ workflows:
       - build-and-test:
           requires:
             - clone-child-repo
-          filters:
-            branches:
-              only:
-                - main
-                - develop
       - build-release:
           requires:
             - build-and-test
-          filters:
-            branches:
-              only:
-                - main
