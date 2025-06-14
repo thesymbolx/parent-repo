@@ -22,6 +22,11 @@ jobs:
           command: |
             git submodule sync
             git submodule update --init --recursive
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .git/modules
+            - */**/.git
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
@@ -31,7 +36,7 @@ jobs:
       - android/save-gradle-cache
       - android/save-build-cache
       - run:
-          name: Build Release APK
+          name: Build Debug APK
           command: ./gradlew assembleRelease
       - store_test_results:
           path: app/build/test-results
@@ -44,11 +49,8 @@ jobs:
       - image: cimg/android:2024.01
     steps:
       - checkout
-      - run:
-          name: Initialize Git Submodules
-          command: |
-            git submodule sync
-            git submodule update --init --recursive
+      - attach_workspace:
+          at: .
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
@@ -70,10 +72,10 @@ workflows:
               only:
                 - main
                 - develop
-#      - build-release:
-#          requires:
-#            - build-and-test
-#          filters:
-#            branches:
-#              only:
-#                - main
+      - build-release:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only:
+                - main
