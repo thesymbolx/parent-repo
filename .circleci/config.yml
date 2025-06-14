@@ -25,7 +25,6 @@ jobs:
             git submodule update --init --recursive
       - persist_to_workspace:
           root: .
-          # Must be relative path from root
           paths:
             - .
 
@@ -62,6 +61,8 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+      - attach_workspace:
+          at: ~/code
       - run:
           name: Build Release APK
           command: ./gradlew assembleRelease
