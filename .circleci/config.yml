@@ -4,29 +4,31 @@ orbs:
   android: circleci/android@2.3.0
 
 jobs:
-  build-and-test:
+  clone-child-repo:
     docker:
       - image: cimg/android:2024.01
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:V/PxmiAO+zs9Y00a9Wjd5Q1DDRtHInFhBl3bgLDXVfk"
       - run:
           name: Add GitHub to known_hosts
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:V/PxmiAO+zs9Y00a9Wjd5Q1DDRtHInFhBl3bgLDXVfk"
       - run:
           name: Initialize Git Submodules
           command: |
             git submodule sync
             git submodule update --init --recursive
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .git/modules
-            - */**/.git
+      
+
+  build-and-test:
+    docker:
+      - image: cimg/android:2024.01
+    steps:
+      - checkout
+      - clone-child-repo
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
@@ -49,8 +51,7 @@ jobs:
       - image: cimg/android:2024.01
     steps:
       - checkout
-      - attach_workspace:
-          at: .
+      - clone-child-repo
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
