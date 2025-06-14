@@ -26,7 +26,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - childrepo/.
 
   build-and-test:
     docker:
@@ -37,7 +37,7 @@ jobs:
       - android/restore-gradle-cache
       - android/restore-build-cache
       - attach_workspace:
-          at: ~/code
+          at: ~/code/childrepo
       - run:
           name: Run Tests
           command: |
