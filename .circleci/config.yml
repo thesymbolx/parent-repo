@@ -8,6 +8,7 @@ jobs:
     docker:
       - image: cimg/android:2024.01
     steps:
+      - checkout
       - add_ssh_keys:
           fingerprints:
             - "SHA256:V/PxmiAO+zs9Y00a9Wjd5Q1DDRtHInFhBl3bgLDXVfk"
