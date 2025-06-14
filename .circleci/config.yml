@@ -24,7 +24,7 @@ jobs:
             git submodule sync
             git submodule update --init --recursive
       - persist_to_workspace:
-          root: childrepo
+          root: .
           # Must be relative path from root
           paths:
             - .
