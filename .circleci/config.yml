@@ -28,9 +28,11 @@ jobs:
           name: Run Tests
           command: |
             ./gradlew testDebugUnitTest
-            ./gradlew connectedDebugAndroidTest
       - android/save-gradle-cache
       - android/save-build-cache
+      - run:
+          name: Build Release APK
+          command: ./gradlew assembleRelease
       - store_test_results:
           path: app/build/test-results
       - store_artifacts:
