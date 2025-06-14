@@ -23,6 +23,11 @@ jobs:
           command: |
             git submodule sync
             git submodule update --init --recursive
+      - persist_to_workspace:
+          root: childrepo
+          # Must be relative path from root
+          paths:
+            - .
 
   build-and-test:
     docker:
@@ -32,6 +37,8 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+      - attach_workspace:
+          at: /code/childrepo
       - run:
           name: Run Tests
           command: |
