@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             ParentRepoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     innerPadding
-                    DaleSuperTextBox()
+                    Text(DaleSuperTextBox())
                 }
             }
         }
